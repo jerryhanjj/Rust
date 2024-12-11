@@ -56,4 +56,8 @@ fn main() {
         println!("{number}!");
     }
     println!("LIFTOFF!!!");
+
+    for idx in 1..=4 {
+        println!("{idx}!");
+    }
 }
