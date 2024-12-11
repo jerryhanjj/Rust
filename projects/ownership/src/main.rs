@@ -28,6 +28,33 @@ fn main() {
     let x = 5;
     makes_copy(x); // x 拷贝 到 makes_copy，没有失效
     println!("still use x = {x}");
+
+    let s1 = give_ownership(); // give_ownership 返回值 移动 给 s1
+    println!("s1 = {s1}");
+
+    let s2 = String::from("hello");
+    let s3 = takes_and_gives_back(s2);
+    println!("s3= {s3}");
+
+    // 使用元组返回多个值
+    let s1 = String::from("hello");
+    let (s2, len) = calculate_length(s1);
+    println!("The length of '{s2}' is {len}.");
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len(); // len() 返回字符串的长度
+
+    (s, length)
+}
+
+fn takes_and_gives_back(a_string: String) -> String {
+    a_string
+}
+
+fn give_ownership() -> String {
+    let some_string = String::from("yours");
+    some_string // 移动 给 函数 give_ownership
 }
 
 fn take_ownership(some_string: String) {
