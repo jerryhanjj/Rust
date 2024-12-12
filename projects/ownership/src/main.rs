@@ -39,7 +39,46 @@ fn main() {
     // 使用元组返回多个值
     let s1 = String::from("hello");
     let (s2, len) = calculate_length(s1);
-    println!("The length of '{s2}' is {len}.");
+    println!("Tuple The length of '{s2}' is {len}.");
+
+    // 引用
+    let s1 = String::from("hello");
+    let len = calculate_length_ref(&s1);
+    println!("Reference The length of '{s1}' is {len}.");
+
+    let mut s = String::from("hello");
+    change(&mut s);
+    println!("mut val reference s = {s}");
+
+    let mut s = String::from("hello");
+    {
+        let r1 = &mut s;
+        println!("r1 = {r1}");
+    } // r1 在这里离开了作用域，所以我们完全可以创建一个新的引用
+    let r2 = &mut s;
+    println!("r2 = {r2}");
+
+    let mut s = String::from("hello");
+    let r1 = &s; // 没问题
+    let r2 = &s; // 没问题
+    println!("{r1} and {r2}");
+    // 此位置之后 r1 和 r2 不再使用
+    let r3 = &mut s; // 没问题
+    println!("{r3}");
+    // println!("{r2}"); 如果此时再使用 r2 ，那么声明 r3 编译不通过
+
+    let s = String::from("hello world");
+    let hello = &s[0..5]; // s[..5]
+    let world = &s[6..11]; // s[6..]
+    println!("slice, {hello}, {world}");
+}
+
+fn change(s: &mut String) {
+    s.push_str(", world");
+}
+
+fn calculate_length_ref(s: &String) -> usize {
+    s.len()
 }
 
 fn calculate_length(s: String) -> (String, usize) {
