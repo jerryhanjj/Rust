@@ -67,10 +67,40 @@ fn main() {
     println!("{r3}");
     // println!("{r2}"); 如果此时再使用 r2 ，那么声明 r3 编译不通过
 
+    let first_word_index = first_word(&s);
+    println!("first_word_index = {first_word_index}");
+
     let s = String::from("hello world");
     let hello = &s[0..5]; // s[..5]
     let world = &s[6..11]; // s[6..]
     println!("slice, {hello}, {world}");
+    let first_word = first_word_char(&s);
+    println!("first_word_index = {first_word}");
+}
+
+fn first_word(s: &String) -> usize {
+    // 转换成字节数组会导致在处理多字节字符（如中文，UTF-8编码）时产生截断
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            // 如果找到空格，返回索引
+            return i;
+        }
+    }
+
+    println!("Not find space in string!");
+    // 如果没有找到，返回字符串长度
+    s.len()
+}
+
+fn first_word_char(s: &String) -> usize {
+    // 使用chars方法来迭代每个unicode字符而不是字节，不会产生对多字节字符的截断
+    for (i, item) in s.chars().enumerate() {
+        if item.is_whitespace() {
+            return i;
+        }
+    }
+    s.len()
 }
 
 fn change(s: &mut String) {
