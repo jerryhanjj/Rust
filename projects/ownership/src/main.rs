@@ -78,6 +78,18 @@ fn main() {
     println!("first_word_index = {first_word}");
 }
 
+fn first_word_slice(s:&String) -> &str{
+    let bytes=s.as_bytes();
+   
+   for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+
 fn first_word(s: &String) -> usize {
     // 转换成字节数组会导致在处理多字节字符（如中文，UTF-8编码）时产生截断
     let bytes = s.as_bytes();
