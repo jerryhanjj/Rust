@@ -71,17 +71,45 @@ fn main() {
     println!("first_word_index = {first_word_index}");
 
     let s = String::from("hello world");
+
+    println!("slice first world = {}", first_word_slice(&s));
+
+    // slice 中的索引是指字节序的索引，不是字符序的索引，注意在处理多字节字符时的不同
     let hello = &s[0..5]; // s[..5]
     let world = &s[6..11]; // s[6..]
     println!("slice, {hello}, {world}");
+
     let first_word = first_word_char(&s);
     println!("first_word_index = {first_word}");
+
+    let first_word = first_word_safe(&s);
+    println!("The first word safely slice = {first_word}");
+
+    // 关于参数使用 &str 带来的一些通用接口的好处
+    let my_string = String::from("hello world");
+
+    // `first_word` 适用于 `String`（的 slice），部分或全部
+    let word = first_word_safe(&my_string[0..6]);
+    let word = first_word_safe(&my_string[..]);
+    // `first_word` 也适用于 `String` 的引用，
+    // 这等价于整个 `String` 的 slice
+    let word = first_word_safe(&my_string);
+
+    let my_string_literal = "hello world";
+
+    // `first_word` 适用于字符串字面值，部分或全部
+    let word = first_word_safe(&my_string_literal[0..6]);
+    let word = first_word_safe(&my_string_literal[..]);
+
+    // 因为字符串字面值已经 **是** 字符串 slice 了，
+    // 这也是适用的，无需 slice 语法！
+    let word = first_word_safe(my_string_literal);
 }
 
-fn first_word_slice(s:&String) -> &str{
-    let bytes=s.as_bytes();
-   
-   for (i, &item) in bytes.iter().enumerate() {
+fn first_word_slice(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {
             return &s[0..i];
         }
@@ -105,6 +133,37 @@ fn first_word(s: &String) -> usize {
     s.len()
 }
 
+/*
+注意：
+s.char_indices() 和 s.chars().enumerate() 都用来迭代，但是有区别
+
+- s.char_indices()
+char_indices() 方法返回一个迭代器，该迭代器产生一个元组 (usize, char)，其中 usize 是字符在字符串中的字节索引，char 是字符本身。
+这个方法直接提供了字符的字节索引，这对于创建字符串切片非常有用，因为字符串切片是基于字节索引的。
+
+- s.chars().enumerate()
+chars() 方法返回一个迭代器，该迭代器产生字符串中的每个字符。
+enumerate() 方法可以应用于任何迭代器，包括 chars() 返回的迭代器。
+它返回一个迭代器，该迭代器产生一个元组 (usize, T)，其中 usize 是元素的索引（从0开始），T 是迭代器中的元素类型，在这个例子中是 char。
+这里的索引是基于字符的枚举索引，而不是字节索引。
+这意味着如果字符串包含多字节字符，enumerate() 方法返回的索引将不会与字符在字符串中的字节位置相对应。
+*/
+
+// 更安全将字符串切片，同时入参使用 &str 使函数更加通用，传入 string 和 &str都可
+fn first_word_safe(s: &str) -> &str {
+    for (i, c) in s.char_indices() {
+        if c == ' ' {
+            // 确保索引位于字符边界上
+            if s.is_char_boundary(i) {
+                return &s[0..i];
+            }
+        }
+    }
+
+    &s[..]
+}
+
+// 入参只能是 &string
 fn first_word_char(s: &String) -> usize {
     // 使用chars方法来迭代每个unicode字符而不是字节，不会产生对多字节字符的截断
     for (i, item) in s.chars().enumerate() {
