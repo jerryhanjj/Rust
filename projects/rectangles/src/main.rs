@@ -1,3 +1,4 @@
+#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -21,6 +22,17 @@ fn main() {
         "The area of the rectangle is {} square pixels.",
         area_1(&rect1)
     );
+
+    /*
+    结构体没有实现 std::fmt::Display trait，所以不能直接打印结构体实例。
+    以debug方式打印结构体实例，加上外部属性 #[derive(Debug)] 来派生 Debug trait
+    如何打印结构体实例？
+        1. 使用 {:?} 占位符
+        2. 使用 {:#?} 占位符
+        3. 使用 dbg! 宏
+        4. 使用自定义方法
+    */
+    println!("rect1 is {:?}", rect1);
 }
 
 // 计算面积
