@@ -33,6 +33,14 @@ fn main() {
         4. 使用自定义方法
     */
     println!("rect1 is {:?}", rect1);
+
+    // 使用dbg!宏打印结构体实例
+    let scale = 2;
+    let rect2 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 40,
+    };
+    dbg!(&rect2);
 }
 
 // 计算面积
