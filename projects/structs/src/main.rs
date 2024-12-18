@@ -1,4 +1,3 @@
-
 #[derive(Clone)]
 struct User {
     active: bool,
@@ -58,6 +57,23 @@ fn main() {
     // 通过添加属性 #[derive(Clone)] 实现clone trait
     let user3 = user1.clone();
     print_user(&user3);
+
+    /*
+    元祖结构体：
+    - 元组结构体有着结构体名称提供的含义，但没有具体的字段名，只有字段的类型。
+    - 当你想给整个元组取一个名字，并使元组成为与其他元组不同的类型时，元组结构体是很有用的
+    */
+    struct Color(i32, i32, i32);
+    struct Point(i32, i32, i32);
+    let black = Color(255, 228, 196);
+    let origin = Point(0, 0, 0);
+
+    println!("r: {}, g: {}, b: {}", black.0, black.1, black.2);
+
+    let Color(r, g, b) = black;
+    println!("r: {}, g: {}, b: {}", r, g, b);
+    let Point(x, y, z) = origin;
+    println!("x: {}, y: {}, z: {}", x, y, z);
 }
 
 fn build_user(email: String, username: String) -> User {
