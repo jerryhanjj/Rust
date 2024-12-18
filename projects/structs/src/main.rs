@@ -74,6 +74,15 @@ fn main() {
     println!("r: {}, g: {}, b: {}", r, g, b);
     let Point(x, y, z) = origin;
     println!("x: {}, y: {}, z: {}", x, y, z);
+
+    /*
+    类单元结构体：
+    - 类单元结构体是一种没有任何字段的结构体。它们被称为类单元结构体，因为它们类似于 ()，即 unit 类型。
+    - 类单元结构体常常在你想要在某个类型上实现 trait 但不需要在类型中存储数据的时候发挥作用。
+    */
+    struct EmptyStruct;
+    #[allow(unused_variables)]
+    let empty = EmptyStruct;
 }
 
 fn build_user(email: String, username: String) -> User {
