@@ -19,6 +19,22 @@ impl Rectangle {
     fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
     }
+
+    // 关联函数
+    fn square(size: u32) -> Rectangle {
+        Rectangle {
+            width: size,
+            height: size,
+        }
+    }
+
+    /*
+    关联函数和方法：
+        - impl 块中的函数都是关联函数
+        - 所有的方法都是关联函数，但不是所有的关联函数都是方法。
+        - 关联函数是不以 self 作为参数的函数，它们通常用于返回一个结构体的新实例。
+        - 方法是以 self 作为参数的函数，它们允许对象实例调用。
+    */
 }
 
 fn main() {
@@ -73,6 +89,9 @@ fn main() {
 
     println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
     println!("Can rect2 hold rect3? {}", rect2.can_hold(&rect3));
+
+    let square = Rectangle::square(3);
+    println!("square = {:?}", square);
 }
 
 // 计算面积
