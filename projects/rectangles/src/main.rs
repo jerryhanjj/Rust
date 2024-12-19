@@ -37,6 +37,14 @@ impl Rectangle {
     */
 }
 
+// 一个结构体可以有多个 impl 块
+impl Rectangle {
+    // 方法
+    fn height(&self) -> u32 {
+        self.height
+    }
+}
+
 fn main() {
     let width1 = 30;
     let height1 = 50;
@@ -92,6 +100,8 @@ fn main() {
 
     let square = Rectangle::square(3);
     println!("square = {:?}", square);
+
+    println!("square's height = {}", square.height());
 }
 
 // 计算面积
