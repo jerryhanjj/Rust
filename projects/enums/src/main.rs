@@ -87,6 +87,43 @@ fn value_in_cents(coin: Coin) -> u8 {
     }
 }
 
+fn plus_one(num: Option<i32>) -> Option<i32> {
+    match num {
+        Some(i) => Some(i + 1),
+        None => None,
+    }
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(_value: u8) {}
+fn reroll() {}
+
+// 通配模式
+fn wildcard(value: u8) {
+    match value {
+        3 => add_fancy_hat(),
+        4 => remove_fancy_hat(),
+        other => move_player(other),
+    }
+}
+
+// _ 占位符模式
+fn placeholder(value: u8) {
+    match value {
+        1 => add_fancy_hat(),
+        2 => remove_fancy_hat(),
+        _ => reroll(),
+    }
+}
+
+// 如果只对某种匹配模式感兴趣，可以使用 if let 来简化代码
+fn only_interest(value: Option<i32>) {
+    if let Some(5) = value {
+        println!("value = 5");
+    }
+}
+
 fn main() {
     let four = IpAddrKind::V4;
     let six = IpAddrKind::V6;
@@ -116,4 +153,15 @@ fn main() {
     println!("Coin: {}", value_in_cents(coin));
 
     println!("Coin: {}", value_in_cents(Coin::Quarter(UsState::Alaska)));
+
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+    println!("five: {:?}, six: {:?}, none: {:?}", five, six, none);
+
+    let value = 5;
+    wildcard(value);
+    placeholder(value);
+
+    only_interest(Some(5));
 }
