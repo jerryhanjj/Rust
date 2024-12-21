@@ -47,11 +47,18 @@ mod back_of_house {
     }
 }
 
+// 使用 use 关键字绝对路径
+// use crate::front_of_house::hosting;
+// 使用 use 关键字相对路径
+use front_of_house::hosting;
+
 pub fn eat_at_restaurant() {
     // 绝对路径
     crate::front_of_house::hosting::add_to_waitlist();
     // 相对路径
     front_of_house::hosting::add_to_waitlist();
+    // use 关键字引入模块
+    hosting::add_to_waitlist();
 
     let mut meal = back_of_house::Breakfast::summer("Rye");
     meal.toast = String::from("Wheat");
