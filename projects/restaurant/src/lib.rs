@@ -51,6 +51,8 @@ mod back_of_house {
 // use crate::front_of_house::hosting;
 // 使用 use 关键字相对路径
 use front_of_house::hosting;
+// 使用 重导出 技术，让外部代码使用hosting
+// pub use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     // 绝对路径
