@@ -58,6 +58,9 @@ use front_of_house::hosting;
 // use std::io::{self, Write};
 // use std::{cmp::Ordering, io};
 
+// 使用 glob 运算符将一个路径下所有的项引入作用域
+// use std::collections::*;
+
 pub fn eat_at_restaurant() {
     // 绝对路径
     crate::front_of_house::hosting::add_to_waitlist();
