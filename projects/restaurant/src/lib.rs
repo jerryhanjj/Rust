@@ -54,6 +54,10 @@ use front_of_house::hosting;
 // 使用 重导出 技术，让外部代码使用hosting
 // pub use crate::front_of_house::hosting;
 
+// 嵌套路径 use
+// use std::io::{self, Write};
+// use std::{cmp::Ordering, io};
+
 pub fn eat_at_restaurant() {
     // 绝对路径
     crate::front_of_house::hosting::add_to_waitlist();
