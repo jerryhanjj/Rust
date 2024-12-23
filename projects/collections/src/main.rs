@@ -27,4 +27,29 @@ fn main() {
     在没有足够空间将所有元素依次相邻存放的情况下，可能会要求分配新内存并将老的元素拷贝到新的空间中。
     这时，第一个元素的引用就指向了被释放的内存。借用规则阻止程序陷入这种状况。
     */
+
+    let v = vec![100, 32, 57];
+    for i in &v {
+        println!("{i}");
+    }
+
+    let mut v = vec![100, 32, 57];
+    for i in &mut v {
+        *i += 50;
+    }
+
+    // 使用枚举来存储多种类型到vec中
+    // 如果不能确切无遗地知道运行时会储存进 vector 的所有类型，枚举技术就行不通了
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("blue")),
+        SpreadsheetCell::Float(10.12),
+    ];
+
 }
