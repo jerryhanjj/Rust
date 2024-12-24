@@ -63,4 +63,13 @@ fn main() {
     // 等价于
     let s = String::from("initial contents");
     println!("s from string::from = {s}");
+
+    // 更新字符串
+    let mut s = String::from("hello");
+    s.push_str(", world");
+    println!("s push_str ={s}");
+
+    let mut s = String::from("foo");
+    s.push('l');
+    println!("s push = {s}");
 }
