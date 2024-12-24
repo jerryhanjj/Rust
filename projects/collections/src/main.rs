@@ -72,4 +72,15 @@ fn main() {
     let mut s = String::from("foo");
     s.push('l');
     println!("s push = {s}");
+
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &s2; // 注意 s1 被移动了，不能继续使用
+    println!("s3 from s1 + s2 = {s3}");
+
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+    let s = format!("{s1}-{s2}-{s3}");
+    println!("s from s1 + s2 + s3 = {s}");
 }
