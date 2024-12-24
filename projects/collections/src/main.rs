@@ -52,4 +52,15 @@ fn main() {
         SpreadsheetCell::Float(10.12),
     ];
 
+    // 新建空字符串
+    let s = String::new();
+
+    // 从字符串字面值创建string
+    let data = "initial contents";
+    let s = data.to_string();
+    // let s = "initial contents".to_string();
+    println!("s from &str = {s}");
+    // 等价于
+    let s = String::from("initial contents");
+    println!("s from string::from = {s}");
 }
