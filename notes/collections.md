@@ -27,3 +27,19 @@ Rust 的核心语言中只有一种字符串类型：字符串 slice str，它�
 更新字符串：
 - 使用 `push_str` 和 `push` 附加字符串
 - 使用 `+` 运算符或 `format!` 宏拼接字符串
+
+## Hashmap
+
+### 创建hashmap
+1. 通常方法，类似 vector
+2. 使用迭代器，元组，zip，collection方法，注意 into_iter 和 iter 两个方法的差异
+
+### 获取键值
+1. 通过 get 方法获取键值，如果没有对应的键值，返回 None
+2. 循环遍历 map
+
+
+### 更新hashmap
+1. 直接覆盖插入
+2. 只在键没有对应值时插入键值对
+3. 更新键值
