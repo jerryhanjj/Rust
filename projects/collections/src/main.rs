@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 fn main() {
     let v = vec![1, 2, 3];
@@ -92,4 +92,23 @@ fn main() {
     scores.insert(String::from("Yellow"), 50);
 
     println!("{:?}", scores);
+
+    /*
+    另一个构建哈希 map 的方法是使用一个元组的 vector 的 collect 方法，其中每个元组包含一个键值对。
+    collect 方法可以将数据收集进一系列的集合类型，包括 HashMap
+    */
+    let teams = vec![String::from("Red"), String::from("Orange")];
+    let initial_scores = vec![10, 50];
+
+    // zip 方法创建一个元组的 vector，其中 “Blue” 与 10 组成一个元组，依此类推。
+    // 然后 collect 方法将这个元组的 vector 转换成一个 HashMap
+    // 这里要注意使用了 into_iter 获得了集合的所有权，因为在后面 entry 插入时，我们使用了 scores 的可变引用，而 iter 方法返回的是不可变引用
+    let scores: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
+    println!("{:?}", scores);
+
+    // 因为使用了 into_iter ，vec 的所有权产生了转移
+    // 再次使用 teams initial_scores 会报错
+    // 如果使用 iter 则不影响
+    // println!("{:?}", teams);
+    // println!("{:?}", initial_scores);
 }
