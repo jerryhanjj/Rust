@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     let v = vec![1, 2, 3];
 
@@ -83,4 +85,11 @@ fn main() {
     let s3 = String::from("toe");
     let s = format!("{s1}-{s2}-{s3}");
     println!("s from s1 + s2 + s3 = {s}");
+
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    println!("{:?}", scores);
 }
