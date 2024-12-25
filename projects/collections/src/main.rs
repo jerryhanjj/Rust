@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 fn main() {
     let v = vec![1, 2, 3];
@@ -103,7 +103,7 @@ fn main() {
     // zip 方法创建一个元组的 vector，其中 “Blue” 与 10 组成一个元组，依此类推。
     // 然后 collect 方法将这个元组的 vector 转换成一个 HashMap
     // 这里要注意使用了 into_iter 获得了集合的所有权，因为在后面 entry 插入时，我们使用了 scores 的可变引用，而 iter 方法返回的是不可变引用
-    let scores: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
+    let mut scores: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
     println!("{:?}", scores);
 
     // 因为使用了 into_iter ，vec 的所有权产生了转移
@@ -111,4 +111,34 @@ fn main() {
     // 如果使用 iter 则不影响
     // println!("{:?}", teams);
     // println!("{:?}", initial_scores);
+
+    // 通过 get 方法并提供对应的键来从哈希 map 中获取值
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name);
+    match score {
+        Some(v) => println!("{}: {}", team_name, v),
+        None => println!("{}: Not found", team_name),
+    }
+
+    // 使用 for 循环遍历哈希 map
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+
+    // 只在键没有对应值时插入
+    // blue 没有值，所以会插入
+    scores.entry(String::from("Blue")).or_insert(20);
+    // red 有值，所以不会插入
+    scores.entry(String::from("Red")).or_insert(15);
+    println!("{:?}", scores);
+
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        // entry 的 or_insert 方法在键对应的值存在时返回这个值的可变引用
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:?}", map);
 }
