@@ -1,4 +1,3 @@
-use std::f32::consts::E;
 use std::fs::{self, File};
 use std::io::{self, ErrorKind, Read};
 
