@@ -1,20 +1,5 @@
 mod database;
-
-mod auth_utils {
-    pub fn login(crdentials:models::Credentials) {
-        crate::database::get_user();
-    }
-    
-    fn logout() {
-        
-    }
-    pub mod models {
-        pub struct Credentials {
-            username: String,
-            password: String,
-        }
-    }
-}
+mod auth_utils;
 
 use auth_utils::models::Credentials;
 use database::connect_to_database;
