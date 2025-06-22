@@ -1,7 +1,10 @@
 mod database;
 mod auth_utils;
 
-use auth_utils::models::Credentials;
+// Re-export the necessary items for external use
+// 使用重导出技术，使得authenticate作为api接口，其入参需要被重导出作为公共使用，而不是作为私有
+pub use auth_utils::models::Credentials;
+
 use database::connect_to_database;
 use database::Status;
 
