@@ -10,10 +10,10 @@ pub use auth_utils::models::Credentials;
 use database::connect_to_database;
 use database::Status;
 
-pub fn authenticate(credentails:Credentials) {
-    let timout = rand::rng().random_range(100..=500);
-    println!("Authenticating with a timeout of {timout} seconds...");
+pub fn authenticate(credentials: Credentials) {
+    let timeout = rand::rng().random_range(100..=500);
+    println!("Authenticating with a timeout of {timeout} seconds...");
     if let Status::Connected = connect_to_database() {
-        auth_utils::login(credentails);
+        auth_utils::login(credentials);
     }
 }
