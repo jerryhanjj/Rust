@@ -1,3 +1,5 @@
+use rand::prelude::*;
+
 mod database;
 mod auth_utils;
 
@@ -9,6 +11,8 @@ use database::connect_to_database;
 use database::Status;
 
 pub fn authenticate(credentails:Credentials) {
+    let timout = rand::rng().random_range(100..=500);
+    println!("Authenticating with a timeout of {timout} seconds...");
     if let Status::Connected = connect_to_database() {
         auth_utils::login(credentails);
     }
