@@ -1,5 +1,8 @@
-trait Park {
+trait Vehicle: Paint {
     fn park(&self);
+    fn get_default_color() -> String {
+        "black".to_owned()
+    }
 }
 
 trait Paint {
@@ -18,7 +21,7 @@ struct Car {
     info: VehicleInfo
 }
 
-impl Park for Car {
+impl Vehicle for Car {
     fn park(&self) {
         println!("Parking Car...");
     }
@@ -36,7 +39,7 @@ impl Truck {
     }
 }
 
-impl Park for Truck {
+impl Vehicle for Truck {
     fn park(&self) {
         println!("Parking Truck...");
     }
@@ -74,6 +77,11 @@ fn main() {
 
     paint_vehicle_red(&car);
 
+    // vec 要求元素类型一致，
+    // 此时 vec 中每个元素是实现了 Paint trait 的某种类型，
+    // 对 vec 的元素类型 显式声明
+    let paintable_objects: Vec<&dyn Paint> = vec![&car, &house];
+
     println!("\n--- 动态分发演示 ---");
     demonstrate_dynamic_dispatch();
 }
@@ -87,7 +95,11 @@ fn paint_red_2(object: &impl Paint) {
 }
 
 // 如果有多个 trait 需要绑定，要求 T 同时实现了 Paint 和 Park
-fn paint_vehicle_red<T>(object: &T) where T: Paint + Park {
+// fn paint_vehicle_red<T>(object: &T) where T: Paint + Vehicle {
+//     object.paint("red".to_owned());
+// }
+// 使用 super trait 之后可以去掉 Paint 功能不变
+fn paint_vehicle_red<T>(object: &T) where T: Vehicle {
     object.paint("red".to_owned());
 }
 
@@ -125,8 +137,28 @@ fn create_paintable_objects() -> Vec<Box<dyn Paint>> {
 fn demonstrate_dynamic_dispatch() {
     let objects = create_paintable_objects();
     
-    // 运行时才知道具体调用哪个类型的 paint 方法
+    println!("方法1: 使用 as_ref()");
     for object in objects.iter() {
         paint_red_dynamic(object.as_ref());
     }
+    
+    println!("\n方法2: 使用解引用操作符");
+    for object in objects.iter() {
+        paint_red_dynamic(&**object);  // 等价于 as_ref()
+    }
+    
+    println!("\n方法3: 使用 Box::as_ref()");
+    for object in objects.iter() {
+        paint_red_dynamic(Box::as_ref(object));
+    }
+    
+    println!("\n方法4: 直接传递 Box (如果函数接受 Box)");
+    for object in objects.iter() {
+        paint_red_dynamic_box(object);
+    }
+}
+
+// 接受 Box 参数的版本
+fn paint_red_dynamic_box(object: &Box<dyn Paint>) {
+    object.paint("red".to_owned());
 }
